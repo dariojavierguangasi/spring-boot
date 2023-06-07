@@ -7,5 +7,6 @@ public class InstructorCreationRequestDto {
 
     private String firstName;
     private String lastName;
+    private String dni;
 
 }

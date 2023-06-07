@@ -25,4 +25,7 @@ public class Instructor {
     @Column(name = "insertion_date")
     private LocalDateTime insertionDate;
 
+    @Column(name = "dni")
+    private String dni;
+
 }

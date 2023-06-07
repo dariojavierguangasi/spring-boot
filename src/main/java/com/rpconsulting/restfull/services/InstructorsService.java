@@ -2,6 +2,7 @@ package com.rpconsulting.restfull.services;
 
 import com.rpconsulting.restfull.dtos.InstructorCreationRequestDto;
 import com.rpconsulting.restfull.dtos.InstructorCreationResponseDto;
+import com.rpconsulting.restfull.exceptions.AlreadyExistsException;
 import com.rpconsulting.restfull.repositories.InstructorsRepository;
 import com.rpconsulting.restfull.repositories.entities.Instructor;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,12 @@ public class InstructorsService {
     private final InstructorsRepository instructorsRepository;
 
     public InstructorCreationResponseDto create(InstructorCreationRequestDto requestDto) {
+        Optional<Instructor> optionalInstructor = instructorsRepository.findFirstByDni(requestDto.getDni());
+
+        if (optionalInstructor.isPresent()) {
+            throw new AlreadyExistsException("Ya existe un instructor con el dni: " + requestDto.getDni());
+        }
+
         Instructor instructor = this.instructorsRepository.save(toEntity(requestDto));
         return toDto(instructor);
     }
@@ -72,6 +79,7 @@ public class InstructorsService {
         instructor.setFirstName(dto.getFirstName());
         instructor.setLastName(dto.getLastName());
         instructor.setInsertionDate(LocalDateTime.now());
+        instructor.setDni(dto.getDni());
         return instructor;
     }
 
@@ -80,6 +88,7 @@ public class InstructorsService {
         dto.setId(instructor.getId().toString());
         dto.setFirstName(instructor.getFirstName());
         dto.setLastName(instructor.getLastName());
+        dto.setDni(instructor.getDni());
         return dto;
     }
 

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.rmi.AlreadyBoundException;
 import java.util.UUID;
 
 @RestController
@@ -22,7 +23,7 @@ public class InstructorsContoller {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public InstructorCreationResponseDto create(@RequestBody InstructorCreationRequestDto instructor) {
+    public InstructorCreationResponseDto create(@RequestBody InstructorCreationRequestDto instructor) throws AlreadyBoundException {
         return instructorsService.create(instructor);
     }
 

@@ -3,10 +3,10 @@ package com.rpconsulting.restfull.controllers;
 import com.rpconsulting.restfull.dtos.StudentCreationRequestDto;
 import com.rpconsulting.restfull.dtos.StudentCreationResponseDto;
 import com.rpconsulting.restfull.services.StudentsService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("api/v1.0/students")
@@ -40,8 +40,8 @@ public class StudentsController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<StudentCreationResponseDto> findAll() {
-        return studentsService.findAll();
+    public Page<StudentCreationResponseDto> findAll(Pageable pageable) {
+        return studentsService.findAll(pageable);
     }
 
     @GetMapping("{id}")
